@@ -18,14 +18,11 @@ spec:
       #!/usr/bin/env sh
       set -e
       
-      eval $(ssh-agent)
-      ssh-add ~/.ssh/id_*
-      git config --global core.sshCommand 'ssh -o StrictHostKeyChecking=accept-new'
-      
       git init
       git remote add origin $(params.appGitUrl)
       git fetch --depth 1 origin $(params.buildRevision)
       git checkout FETCH_HEAD
+
   - name: build-sources
     image: revanpeddi/maven-jdk14
     workingDir: "$(workspaces.app-source.path)"
