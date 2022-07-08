@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-pipeline
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: openshift-gitops
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: 'https://helmcharts.cscinfo.com/artifactory/helm-incubator'
+    targetRevision: 0.1.0
+    chart: grafana
+  syncPolicy: {}
+---

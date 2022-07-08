@@ -1,0 +1,52 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-pipeline
+spec:
+  params:
+  - name: buildRevision
+    description: The revision of the build, i.e. the commit revision of the application repository
+  - name: appGitUrl
+    description: The application repository
+  #- name: configGitUrl
+  #  description: The application config (GitOps) repository
+  - name: appImage
+    description: The application Docker image name
+  workspaces:
+  - name: app-source
+  # - name: config-source
+
+  tasks:
+  - name: build-java-app
+    taskRef:
+      name: build-java-app
+    params:
+    - name: buildRevision
+      value: $(params.buildRevision)
+    - name: appGitUrl
+      value: $(params.appGitUrl)
+    - name: appImage
+      value: $(params.appImage)
+    workspaces:
+    - name: app-source
+      workspace: app-source
+  # - name: deploy-java-app
+  #   taskRef:
+  #     name: deploy
+  #   runAfter:
+  #   - build-java-app
+  #   params:
+  #   - name: environment
+  #     value: dev
+  #   - name: argo-app-name
+  #     value: app-dev
+    #- name: configGitUrl
+    #  value: $(params.configGitUrl)
+    # - name: appImage
+    #   value: $(params.appImage)
+    # - name: buildRevision
+    #   value: $(params.buildRevision)
+    # workspaces:
+    # - name: config-source
+    #   workspace: config-source
+  
