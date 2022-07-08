@@ -25,7 +25,7 @@ spec:
 
   - name: build-sources
     image: revanpeddi/maven-jdk14
-    workingDir: "$(workspaces.app-source.path)"
+    workingDir: "$(workspaces.app-source.path)/coffe-shop"
     command:
     - /usr/bin/mvn
     args:
@@ -34,7 +34,7 @@ spec:
 
   - name: build-image
     image: quay.io/buildah/stable
-    workingDir: "$(workspaces.app-source.path)/realtimeproject"
+    workingDir: "$(workspaces.app-source.path)/coffee-shop"
     command: ['buildah', 'bud', '--tls-verify=false', '--layers', '-f', 'Dockerfile', '-t', '$(params.appImage):$(params.buildRevision)', '.']
     volumeMounts:
     - name: varlibc
