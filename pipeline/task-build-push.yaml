@@ -25,7 +25,7 @@ spec:
 
   - name: build-sources
     image: revanpeddi/maven-jdk14
-    workingDir: "$(workspaces.app-source.path)/coffe-shop"
+    workingDir: "$(workspaces.app-source.path)/coffee-shop"
     command:
     - /usr/bin/mvn
     args:
